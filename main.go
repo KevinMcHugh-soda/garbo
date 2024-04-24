@@ -1,16 +1,13 @@
 package main
 
 import (
-	"bytes"
 	_ "embed"
 	"encoding/csv"
 	"fmt"
-	"io"
+	"log"
+	"os"
 	"strconv"
 )
-
-//go:embed cool_people.csv
-var peopleBytes []byte
 
 type Person struct {
 	first    string
@@ -21,26 +18,29 @@ type Person struct {
 }
 
 func main() {
-	r := bytes.NewReader(peopleBytes)
-	reader := csv.NewReader(r)
-	// throw the header row away
-	_, err := reader.Read()
-	if err != nil {
-		fmt.Println(err)
-		return
+	if len(os.Args) < 2 {
+		fmt.Printf("Usage: %s, file_name.csv", os.Args[0])
+		os.Exit(2)
 	}
-	fmt.Println("Hello, World!")
+
+	filePath := os.Args[1]
+	f, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal("Unable to read input file "+filePath, err)
+	}
+	defer f.Close()
+
+	csvReader := csv.NewReader(f)
+	records, err := csvReader.ReadAll()
+	if err != nil {
+		log.Fatal("Unable to parse file as CSV for "+filePath, err)
+	}
 
 	people := make([]Person, 0)
-	for i := 0; true; i++ {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			fmt.Println(err)
-			return
+	for idx, record := range records {
+		if idx == 0 {
+			continue
 		}
-
 		a, err := strconv.Atoi(record[4])
 		if err != nil {
 			fmt.Println(err)
