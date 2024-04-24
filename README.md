@@ -30,8 +30,8 @@ It's a garbage lil search tool
     * git config --global -e
 
 
-TODO:
-* Build the basic search tool
+## TODO:
+* ~~Build the basic search tool~~
 * Parameterize the file to search
 * Parameterize the search field
 * Parameterize the search value
