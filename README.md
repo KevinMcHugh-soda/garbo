@@ -1,8 +1,7 @@
-WELCOME TO GARBO SEARCH
-
+# WELCOME TO GARBO SEARCH
 It's a garbage lil search tool
 
-Install Steps:
+## Install Steps:
 * Open VS Code
     * CMD+Shift+P: Install 'Code' command in path
 * Set your editor:
