@@ -8,14 +8,6 @@ import (
 	"os"
 )
 
-type Person struct {
-	first    string
-	last     string
-	city     string
-	state    string
-	coolness int
-}
-
 func main() {
 	if len(os.Args) < 3 {
 		fmt.Printf("Usage: %s, file_name.csv first_name", os.Args[0])
