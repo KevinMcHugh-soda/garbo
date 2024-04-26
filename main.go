@@ -15,14 +15,29 @@ func main() {
 	}
 
 	filePath := os.Args[1]
+
+	searchField := os.Args[2]
+	searchValue := os.Args[3]
+
+	records := loadRecords(filePath)
+
+	for _, record := range records {
+		if searchValue[0] == "-"[0] {
+			if "-"+record[searchField] != searchValue {
+				fmt.Printf("%s\n", record["first"])
+			}
+		} else if record[searchField] == searchValue {
+			fmt.Printf("%s\n", record["first"])
+		}
+	}
+}
+
+func loadRecords(filePath string) []map[string]string {
 	f, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal("Unable to read input file "+filePath, err)
 	}
 	defer f.Close()
-
-	searchField := os.Args[2]
-	searchValue := os.Args[3]
 
 	csvReader := csv.NewReader(f)
 	rows, err := csvReader.ReadAll()
@@ -30,27 +45,19 @@ func main() {
 		log.Fatal("Unable to parse file as CSV for "+filePath, err)
 	}
 
-	people := make([]map[string]string, 0)
+	records := make([]map[string]string, 0)
 	headers := make([]string, 0)
 	for idx, row := range rows {
 		if idx == 0 {
 			headers = row
 			continue
 		}
-		person := make(map[string]string)
+		record := make(map[string]string)
 		for jdx, cell := range row {
-			person[headers[jdx]] = cell
+			record[headers[jdx]] = cell
 		}
-		people = append(people, person)
+		records = append(records, record)
 	}
 
-	for _, person := range people {
-		if searchValue[0] == "-"[0] {
-			if "-"+person[searchField] != searchValue {
-				fmt.Printf("%s\n", person["first"])
-			}
-		} else if person[searchField] == searchValue {
-			fmt.Printf("%s\n", person["first"])
-		}
-	}
+	return records
 }
