@@ -37,3 +37,5 @@ It's a garbage lil search tool
 * ~~Parameterize the search field~~
 * ~~Support dynamic search fields~~
 * Support searching multiple fields
+* Support only getting the first n results
+* Print results in csv
