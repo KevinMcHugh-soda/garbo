@@ -45,7 +45,7 @@ func main() {
 
 	for _, person := range people {
 		if person[searchField] == searchValue {
-			fmt.Println(person)
+			fmt.Printf("%s,%s,%s,%s\n", person["first"], person["last"], person["city"], person["state"])
 		}
 	}
 }
