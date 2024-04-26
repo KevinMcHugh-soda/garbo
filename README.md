@@ -35,5 +35,5 @@ It's a garbage lil search tool
 * ~~Parameterize the file to search~~
 * ~~Parameterize the search value~~
 * Parameterize the search field
-* Support dynamic search fields
+* ~~Support dynamic search fields~~
 * Support searching multiple fields

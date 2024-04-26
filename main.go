@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
 type Person struct {
@@ -33,32 +32,26 @@ func main() {
 	firstName := os.Args[2]
 
 	csvReader := csv.NewReader(f)
-	records, err := csvReader.ReadAll()
+	rows, err := csvReader.ReadAll()
 	if err != nil {
 		log.Fatal("Unable to parse file as CSV for "+filePath, err)
 	}
 
-	people := make([]Person, 0)
-	for idx, record := range records {
+	people := make([]map[string]string, 0)
+	headers := make([]string, 0)
+	for idx, row := range rows {
 		if idx == 0 {
-			continue
+			headers = row
 		}
-		a, err := strconv.Atoi(record[4])
-		if err != nil {
-			fmt.Println(err)
-			return
+		person := make(map[string]string)
+		for jdx, cell := range row {
+			person[headers[jdx]] = cell
 		}
-		people = append(people, Person{
-			first:    record[0],
-			last:     record[1],
-			city:     record[2],
-			state:    record[3],
-			coolness: a,
-		})
+		people = append(people, person)
 	}
 
 	for _, person := range people {
-		if person.first == firstName {
+		if person["first"] == firstName {
 			fmt.Println(person)
 		}
 	}
