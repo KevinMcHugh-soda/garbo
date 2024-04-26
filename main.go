@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 {
-		fmt.Printf("Usage: %s, file_name.csv first_name", os.Args[0])
+	if len(os.Args) < 4 {
+		fmt.Printf("Usage: %s, file_name.csv first kevin", os.Args[0])
 		os.Exit(2)
 	}
 
@@ -21,7 +21,8 @@ func main() {
 	}
 	defer f.Close()
 
-	firstName := os.Args[2]
+	searchField := os.Args[2]
+	searchValue := os.Args[3]
 
 	csvReader := csv.NewReader(f)
 	rows, err := csvReader.ReadAll()
@@ -43,7 +44,7 @@ func main() {
 	}
 
 	for _, person := range people {
-		if person["first"] == firstName {
+		if person[searchField] == searchValue {
 			fmt.Println(person)
 		}
 	}
