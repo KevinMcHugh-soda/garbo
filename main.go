@@ -18,8 +18,8 @@ type Person struct {
 }
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Printf("Usage: %s, file_name.csv", os.Args[0])
+	if len(os.Args) < 3 {
+		fmt.Printf("Usage: %s, file_name.csv first_name", os.Args[0])
 		os.Exit(2)
 	}
 
@@ -29,6 +29,8 @@ func main() {
 		log.Fatal("Unable to read input file "+filePath, err)
 	}
 	defer f.Close()
+
+	firstName := os.Args[2]
 
 	csvReader := csv.NewReader(f)
 	records, err := csvReader.ReadAll()
@@ -56,7 +58,7 @@ func main() {
 	}
 
 	for _, person := range people {
-		if person.first == "kevin" {
+		if person.first == firstName {
 			fmt.Println(person)
 		}
 	}
