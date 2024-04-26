@@ -1,12 +1,12 @@
 diff --git a/README.md b/README.md
-index 77fbd73..7873042 100644
+index 77fbd73..09e7faf 100644
 --- a/README.md
 +++ b/README.md
 @@ -1,6 +1,8 @@
  # WELCOME TO GARBO SEARCH
  It's a garbage lil search tool
  
-+If you include this line in your commit, you weren't paying attention!
++Please do not commit this line
 +
  ## Install Steps:
  * Open VS Code
@@ -15,9 +15,9 @@ index 77fbd73..7873042 100644
  * Support searching multiple fields
  * Support only getting the first n results
  * ~~Print results in csv~~
-+* ~~Negative search matching~~
++* Negative search matching
 diff --git a/main.go b/main.go
-index f23b892..a01d492 100644
+index f23b892..0aa3b5f 100644
 --- a/main.go
 +++ b/main.go
 @@ -35,6 +35,7 @@ func main() {
@@ -28,16 +28,18 @@ index f23b892..a01d492 100644
  		}
  		person := make(map[string]string)
  		for jdx, cell := range row {
-@@ -44,7 +45,11 @@ func main() {
+@@ -44,8 +45,12 @@ func main() {
  	}
  
  	for _, person := range people {
 -		if person[searchField] == searchValue {
+-			fmt.Printf("%s,%s,%s,%s\n", person["first"], person["last"], person["city"], person["state"])
 +		if searchValue[0] == "-"[0] {
 +			if "-"+person[searchField] != searchValue {
-+				fmt.Printf("%s,%s,%s,%s\n", person["first"], person["last"], person["city"], person["state"])
++				fmt.Printf("%s\n", person["first"])
 +			}
 +		} else if person[searchField] == searchValue {
- 			fmt.Printf("%s,%s,%s,%s\n", person["first"], person["last"], person["city"], person["state"])
++			fmt.Printf("%s\n", person["first"])
  		}
  	}
+ }
