@@ -35,6 +35,7 @@ func main() {
 	for idx, row := range rows {
 		if idx == 0 {
 			headers = row
+			continue
 		}
 		person := make(map[string]string)
 		for jdx, cell := range row {
@@ -44,8 +45,12 @@ func main() {
 	}
 
 	for _, person := range people {
-		if person[searchField] == searchValue {
-			fmt.Printf("%s,%s,%s,%s\n", person["first"], person["last"], person["city"], person["state"])
+		if searchValue[0] == "-"[0] {
+			if "-"+person[searchField] != searchValue {
+				fmt.Printf("%s\n", person["first"])
+			}
+		} else if person[searchField] == searchValue {
+			fmt.Printf("%s\n", person["first"])
 		}
 	}
 }
